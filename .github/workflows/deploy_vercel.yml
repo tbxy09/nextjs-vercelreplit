@@ -4,28 +4,28 @@ on:
     branches:
       - main  # replace with your default branch if not "main"
   workflow_dispatch:  # This line adds a manual trigger
+    branches:
+      - main  # replace with your default branch if not "main"
 
 jobs:
-  basic-auth:
+  deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v2
-      - uses: ./
-        id: now-deployment-staging
-        if: github.event_name == 'pull_request_target'
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_AUTH }}
-          working-directory: example/express-basic-auth
-      - uses: ./
-        id: now-deployment-production
-        if: github.event_name == 'push'
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_AUTH }}
-          vercel-args: '--prod'
-          working-directory: example/express-basic-auth
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Build
+      run: npm run build
+
+    - uses: amondnet/vercel-action@v20 #deploy
+      with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }} # Required
+          github-token: ${{ secrets.GITHUB_TOKEN }} #Optional 
+          vercel-args: '--prod' #Optional
+          vercel-org-id: ${{ secrets.ORG_ID}}  #Required
+          vercel-project-id: ${{ secrets.PROJECT_ID}} #Required 
+          working-directory: ./sub-directory
