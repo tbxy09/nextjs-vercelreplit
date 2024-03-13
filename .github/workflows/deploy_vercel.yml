@@ -2,10 +2,8 @@ name: Deploy to Vercel
 on:
   push:
     branches:
-      - main  # replace with your default branch if not "main"
+      - deploy  # replace with your default branch if not "main"
   workflow_dispatch:  # This line adds a manual trigger
-    branches:
-      - main  # replace with your default branch if not "main"
 
 jobs:
   deploy:
