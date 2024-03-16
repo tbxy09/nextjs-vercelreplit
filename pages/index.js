@@ -2,13 +2,27 @@ import React from 'react';
 import Head from 'next/head';
 
 const HomePage = () => {
+  const handleButtonClick = async () => {
+    const response = await fetch('/api/generate', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        diagramType: 'flowchart',
+        diagramData: 'graph TD; A-->B; B-->C; C-->D;',
+      }),
+    });
+
+    const data = await response.json();
+    console.log(data);
+  };
   return (
     <div>
       <Head>
         <title>Mermaid Server</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
       <main>
         <h1>Welcome to Mermaid Server</h1>
         <p>
@@ -28,25 +42,30 @@ const HomePage = () => {
         <h2>Demo Cases</h2>
         <h3>Flowchart</h3>
         <pre>
-          graph TD;
+          {/* graph TD;
           A-->B;
           B-->C;
-          C-->D;
+          C-->D; */}
         </pre>
 
         <h3>Sequence Diagram</h3>
         <pre>
-          sequenceDiagram
-          participant Alice
-          participant Bob
-          Alice->>John: Hello John, how are you?
-          loop Healthcheck
-              John->>John: Fight against hypochondria
-          end
-          Note right of John: Rational thoughts<br/>prevail!
-          John-->>Alice: Great!
-          John->>Bob: How about you?
-          Bob-->>John: Jolly good!
+            <code>
+            {`
+            sequenceDiagram
+            participant Alice
+            participant Bob
+            Alice->>John: Hello John, how are you?
+            loop Healthcheck
+                John->>John: Fight against hypochondria
+            end
+            Note right of John: Rational thoughts<br/>prevail!
+            John-->>Alice: Great!
+            John->>Bob: How about you?
+            Bob-->>John: Jolly good!`
+          }
+          </code>
+          
         </pre>
 
         <h2>API Endpoint</h2>
@@ -61,6 +80,7 @@ const HomePage = () => {
             "diagramData": "graph TD; A-->B; B-->C; C-->D;"
           }`}
         </pre>
+        <button onClick={handleButtonClick}>Send POST Request</button>
       </main>
     </div>
   );

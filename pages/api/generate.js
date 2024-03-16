@@ -4,11 +4,11 @@ import { uploadDiagram } from '../../utils/uploadDiagram';
 export default async function handler(req, res) {
   if (req.method === 'POST') {
     const { diagramType, diagramData } = req.body;
-    
+    // console.log('diagramType:', diagramType);
     try {
-      const diagramUrl = await renderDiagram(diagramType, diagramData);
-      await uploadDiagram(diagramType, diagramUrl);
-      
+      const svgContent = await renderDiagram(diagramType, diagramData);
+      const diagramUrl = await uploadDiagram(diagramType, svgContent);
+      console.log('diagramUrl:', diagramUrl);
       res.status(200).json({ url: diagramUrl });
     } catch (error) {
       console.error('Error generating diagram:', error);

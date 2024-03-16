@@ -12,7 +12,10 @@
     "puppeteer": "^22.4.1",
     "react": "18.0.0",
     "react-dom": "18.0.0",
-    "upstash": "^0.0.1"
+    "react-markdown": "^7.0.1",
+    "@upstash/redis": "^1.16.0",
+    "@vercel/analytics": "^0.1.7-beta.1",
+    "lru-cache": "^7.14.1"  
   },
   "devDependencies": {
     "eslint": "8.12.0",
