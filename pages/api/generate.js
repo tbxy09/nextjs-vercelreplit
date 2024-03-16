@@ -7,7 +7,9 @@ export default async function handler(req, res) {
     // console.log('diagramType:', diagramType);
     try {
       const svgContent = await renderDiagram(diagramType, diagramData);
-      const diagramUrl = await uploadDiagram(diagramType, svgContent);
+      // upload the svgContent to  gist database
+      // const gistUrl = uploadGist(svgContent);
+      const diagramUrl = await uploadDiagram(diagramType, gistUrl);
       console.log('diagramUrl:', diagramUrl);
       res.status(200).json({ url: diagramUrl });
     } catch (error) {
